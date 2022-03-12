@@ -1,0 +1,31 @@
+class Solution {
+public:
+    struct comparator{
+        bool operator() (pair<int, int> &x, pair<int,int> &y){
+            if(x.second == y.second){
+                return x.first <= y.first;
+            }
+            return x.second > y.second;
+            
+        }
+    };
+    vector<int> frequencySort(vector<int>& nums) {
+        unordered_map<int, int> m;
+        for(auto i:nums){
+            m[i]++;
+        }
+        priority_queue<pair<int, int>, vector<pair<int, int>>, comparator> minHeap;
+        for(auto i: m){
+            minHeap.push(i);
+        }
+        vector<int> ans;
+        while(!minHeap.empty()){
+            auto it = minHeap.top();
+            minHeap.pop();
+            for(int i=0;i<it.second;i++){
+                ans.push_back(it.first);
+            }
+        }
+        return ans;
+    }
+};
