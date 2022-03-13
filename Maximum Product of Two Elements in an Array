@@ -1,0 +1,25 @@
+class Solution {
+public:
+    struct comparator{
+        bool operator() (int &x, int &y){
+            return x > y;
+        }
+    };
+    int maxProduct(vector<int>& nums) {
+        priority_queue<int, vector<int>, comparator> minHeap;
+        for(int i=0;i<2;i++){
+            minHeap.push(nums[i]);
+        }
+        for(int i=2;i<nums.size();i++){
+            minHeap.push(nums[i]);
+            if(minHeap.size() > 2){
+                minHeap.pop();
+            }    
+        }
+        int num1 = minHeap.top()-1;
+        minHeap.pop();
+        int num2 = minHeap.top()-1;
+        minHeap.pop();
+        return num1*num2;
+    }
+};
