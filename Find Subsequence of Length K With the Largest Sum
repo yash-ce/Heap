@@ -1,0 +1,41 @@
+class Solution {
+public:
+    struct comparator{
+    bool operator() (pair<int, int> &x, pair<int, int> &y){
+            if(x.second == y.second){
+                return x.first > y.first;
+            }
+            return x.second > y.second;
+        }
+    };
+    vector<int> maxSubsequence(vector<int>& nums, int k) {
+        map<int, int> m;
+        for(int i=0;i<nums.size();i++){
+           m.insert({i, nums[i]});
+        }
+        priority_queue<pair<int, int>, vector<pair<int, int>>, comparator> minHeap;
+        for(auto i: m){
+            minHeap.push(i);
+            if(minHeap.size() > k){
+                minHeap.pop();
+            }
+        }
+        vector<pair<int, int>> ans;
+        int c = 0;
+        while(!minHeap.empty()){
+            auto it = minHeap.top();
+            minHeap.pop();
+            ans.push_back(it);
+            
+        
+        }
+        sort(ans.begin(), ans.end());
+        vector<int> res;
+        for(auto it:ans){
+            res.push_back(it.second);
+        }
+        return res;
+        
+        
+    }
+};
