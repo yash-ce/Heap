@@ -1,0 +1,31 @@
+class Solution {
+public:
+    struct comparator{
+        bool operator() (pair<int, int> &x, pair<int, int> &y){
+            return x.second < y.second;
+        }
+    };
+    int minSetSize(vector<int>& arr) {
+        map<int, int> m;
+        for(auto i:arr){
+            m[i]++;
+        }
+        priority_queue<pair<int, int>, vector<pair<int, int>>, comparator> maxHeap;
+        for(auto i : m){
+            maxHeap.push(i);
+        }
+        int count = 0;
+        int s = 0;
+        while(!maxHeap.empty()){
+            auto it = maxHeap.top();
+            maxHeap.pop();
+            s += it.second;
+            count++;
+            if(s >= (arr.size()/2)){
+                break;
+            }
+        }
+        return count;
+        
+    }
+};
