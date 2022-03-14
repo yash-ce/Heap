@@ -1,0 +1,32 @@
+class Solution {
+public:
+    struct comparator{
+        bool operator() (pair<vector<int>, float> &x,  pair<vector<int>, float> &y) {
+            return x.second < y.second;
+        }
+    };
+    float dist(int x, int y){
+        return sqrt(pow(x, 2) + pow(y, 2));
+    }
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        priority_queue<pair<vector<int>, float>, vector<pair<vector<int>, float>>, comparator> maxHeap;
+        vector<vector<int>> v;
+        multimap<vector<int>, float> m;
+        for(int i=0;i<points.size();i++){
+            m.insert({points[i], dist(points[i][0], points[i][1])});
+        }
+        for(auto i : m){
+            maxHeap.push(i);
+            if(maxHeap.size() > k){
+                maxHeap.pop();
+            }
+        }
+        
+        while(!maxHeap.empty()){
+            auto it = maxHeap.top();
+            maxHeap.pop();
+            v.push_back(it.first);
+        }
+        return v;
+    }
+};
