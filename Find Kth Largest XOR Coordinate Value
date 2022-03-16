@@ -1,0 +1,60 @@
+class Solution {
+public:
+    // struct comparator{
+    //     bool operator() ( int &x,  int &y) {
+    //         return x < y;
+    //     }
+    // };
+    int kthLargestValue(vector<vector<int>>& matrix, int k) {
+        // priority_queue<int,  vector<int>> ma;
+        // vector<int> v;
+        // for(int i=0;i<matrix.size();i++){
+        //     for(int j =0;j<matrix[i].size();j++){
+        //         v.push_back(matrix[i][j]);
+        //     }
+        // }
+        // // cout<<(5 ^ 5)<<"ad"<<endl;
+        // set<int> s;
+        // for(int i=0;i<v.size();i++){
+        //     for(int j =i;j<v.size();j++){
+        //         // cout<<(v[i] ^ v[j])<<endl;
+        //         // if(v[i] == v[j]){
+        //         //     s.insert(v[i]);
+        //         // }
+        //         // else{
+        //         s.insert(v[i]^v[j]);
+        //         // }
+        //         // cout<<ma.top()<<endl;
+        //         // if(ma.size() > k){
+        //         //     ma.pop();
+        //         // }
+        //     }
+        // }
+        // int c = 0;
+        // int n1 = 0; 
+        // for (auto it = s.begin(); it !=
+        //                      s.end(); ++it){
+        //     if(c == k){
+        //         n1 = *it;
+        //     }
+        //     c++;
+        // }
+        // // cout << ' ' << *it;
+        // return n1;
+        int n = matrix.size(), m = matrix[0].size();
+        priority_queue<int, vector<int>, greater<int>> pq;        
+        for(int i=0;i<n;i++)
+            for(int j=0;j<m;j++){
+                if(i)
+                    matrix[i][j]^=matrix[i-1][j];
+                if(j)
+                    matrix[i][j]^=matrix[i][j-1];
+                if(i && j)
+                    matrix[i][j]^=matrix[i-1][j-1];
+                pq.push(matrix[i][j]);
+                if(pq.size()>k)
+                    pq.pop();
+            }
+        return pq.top();
+    }
+};
