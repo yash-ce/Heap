@@ -1,0 +1,44 @@
+class Solution {
+public:
+    struct comparator{
+        bool operator() (pair<int, int> &x, pair<int, int> &y){
+            return x.second < y.second;
+        }
+    };
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+        map<int, int> m;
+        for(int i : barcodes){
+            m[i]++;
+        }
+        priority_queue<pair<int, int>, vector<pair<int, int>>, comparator> pq;
+        for(auto it : m){
+            pq.push(it);
+        }
+        // for(auto it : m){
+        //     cout<<it.first<<it.second<<endl;
+        // }
+        vector<int> v;
+        while(pq.size() > 1){
+            auto it1 = pq.top();pq.pop();
+            auto it2 = pq.top();pq.pop();
+            v.push_back(it1.first);
+            v.push_back(it2.first);
+            it1.second -= 1;
+            it2.second -= 1;
+            if(it1.second > 0){
+                pq.push(it1);
+            }
+            if(it2.second > 0){
+                pq.push(it2);
+            }
+        }
+        if(pq.size() == 0){
+            return v;
+        }
+        else{
+            v.push_back(pq.top().first);
+            return v;
+        }
+        return v;
+    }
+};
