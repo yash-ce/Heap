@@ -1,0 +1,37 @@
+class Solution {
+public:
+    struct comparator{
+        bool operator() (pair<int, int> &x,  pair<int, int> &y){
+            return x.first < y.first;
+        }
+    };
+    int reductionOperations(vector<int>& nums) {
+        map<int, int> m;
+        for(int i: nums){
+            m[i]++;
+        }
+        priority_queue<pair<int, int> ,vector<pair<int, int>>, comparator> pq;
+        for(auto i : m){
+            pq.push(i);
+        }
+        if(pq.size() == 1){
+            return 0;
+        }
+        if(pq.size() == 2){
+            return pq.top().second;
+        }
+        int c = 0;
+        while(!pq.empty()){
+            auto m1 = pq.top();pq.pop();
+            auto m2 = pq.top();pq.pop();
+            m2.second += m1.second;
+            pq.push(m2);
+            c += m1.second;
+            if(pq.size() == 1){
+                break;
+            }
+        }
+        return c;
+        
+    }
+};
