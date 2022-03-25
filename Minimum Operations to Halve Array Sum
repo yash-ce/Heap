@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int halveArray(vector<int>& nums) {
+        long double s = 0;
+        priority_queue<long double, vector<long double>> pq;
+        for(auto i : nums){
+            s += i;
+            pq.push(i);
+        }
+        int c = 0;
+        long double s1 = s;
+        while(s > s1/2.0){
+            c++;
+            long double n = pq.top();pq.pop();
+            s -= n/2.0;
+            // n = n/2.0;
+            pq.push(n/2.0);
+            
+            
+        }
+        return c;
+    }
+};
