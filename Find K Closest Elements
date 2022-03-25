@@ -1,0 +1,30 @@
+class Solution {
+public:
+    struct comparator{
+        bool operator() (pair<int, int> &x, pair<int, int> &y){
+            if(x.second == y.second){
+                return x.first < y.first;
+            }
+            return x.second < y.second;
+        }
+    };
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        priority_queue<pair<int,int>, vector<pair<int, int>>, comparator> pq;
+        for(int i=0;i<arr.size();i++){
+            pq.push({arr[i], abs(arr[i]-x)});
+            if(pq.size() > k){
+                
+                pq.pop();
+            }
+            
+        }
+        vector<int> ans;
+        while(!pq.empty()){
+            auto it = pq.top();
+            ans.push_back(pq.top().first);
+            pq.pop();
+        }
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
